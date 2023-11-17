@@ -21,7 +21,7 @@ const Login = () => {
           <Image
             width={220}
             height={60}
-            src="/assets/images/logo.svg"
+            src="/ad/assets/images/logo.svg"
             alt="logo"
           />
         </div>
