@@ -135,7 +135,7 @@ const SDKIntroduction = () => {
         <Col span={10}>
           <img
             style={{ width: "55%", minWidth: 400 }}
-            src="/assets/images/sdk-process.png"
+            src="/ad/assets/images/sdk-process.png"
             alt="sdk-process"
           />
         </Col>

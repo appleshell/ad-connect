@@ -57,7 +57,7 @@ const PageHeader = () => {
         <Dropdown menu={{ items }} className="float-right">
           <Space>
             <Image
-              src="/assets/images/avatar.png"
+              src="/ad/assets/images/avatar.png"
               width={24}
               height={24}
               alt="avatar"
