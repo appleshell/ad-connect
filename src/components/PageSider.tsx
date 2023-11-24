@@ -44,7 +44,7 @@ const PageSider = () => {
   return (
     <Sider style={{ backgroundColor: "#fff" }} className="h-screen">
       <Header className="px-5">
-        <img src="/ad/assets/images/logo-white.svg" alt="logo" className="w-full" />
+        <Image src="/assets/images/logo-white.svg" alt="logo" className="w-full" />
       </Header>
       <Menu
         className="sider-menu"
