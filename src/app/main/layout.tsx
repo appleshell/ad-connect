@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from "react";
 import { Layout, Spin } from "antd";
 import { PageHeader, PageSider } from "@/components";
 import WrapperContext, { IMeun } from "./wrapperContext";
+import axios from "axios";
+import { BASE_URL } from "@/config/http";
 
 const { Content, Footer } = Layout;
 
@@ -48,15 +50,17 @@ const MainPage = ({ children }: any) => {
   const getInitInfo = async () => {
     try {
       if (typeof window !== "undefined") {
-        const userCode = window.localStorage.getItem("AUTH_USER"); // 用于查询用户信息和对应的菜单数据
-        const res = await Promise.resolve({
-          userInfo: { userId: 123, user_name: "zhansan" },
-          menus: userCode === "1" ? apiMenuList : sdkMenuList,
-        });
-        const { userInfo, menus } = res;
+        const userId = window.localStorage.getItem("AUTH_USER"); // 用于查询用户信息和对应的菜单数据
+        // const res = await Promise.resolve({
+        //   userInfo: { userId: 123, user_name: "zhansan" },
+        //   menus: userCode === "1" ? apiMenuList : sdkMenuList,
+        // });
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`);
+        const { type, ...restUserInfo } = data;
+        // const { userInfo, menus } = res;
 
-        setMenus(menus);
-        setUserInfo(userInfo);
+        setMenus(type === 1 ? apiMenuList : sdkMenuList);
+        setUserInfo(data);
       }
     } catch (error) {
       console.log(error);

@@ -1,16 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Tabs } from "antd";
 import Image from "next/image";
 import SmsCodeLogin from "./components/sms-code-login";
 import AccountLogin from "./components/account-login";
+import Register from "./components/register";
 import { ballCanvas } from "./components/canvas-d";
 
 const Login = () => {
+  const [activeTab, setActiveTab] = useState("2");
+
   useEffect(() => {
     ballCanvas().start(6);
   }, []);
+
+  const registerSuccess = () => {
+    setActiveTab("2");
+  };
+
   return (
     <section className="w-full h-screen relative">
       <div className="absolute h-screen left-0 top-0 overflow-hidden">
@@ -27,9 +35,16 @@ const Login = () => {
         </div>
         <Tabs
           centered
+          activeKey={activeTab}
+          onChange={(key) => setActiveTab(key)}
           items={[
-            { key: "1", label: "手机登录", children: <SmsCodeLogin /> },
-            { key: "2", label: "账号密码登录", children: <AccountLogin /> },
+            // { key: "1", label: "手机登录", children: <SmsCodeLogin /> },
+            { key: "2", label: "登录 / Sign In", children: <AccountLogin /> },
+            {
+              key: "3",
+              label: "注册  / Sign Up",
+              children: <Register onSuccess={registerSuccess} />,
+            },
           ]}
         />
       </div>
