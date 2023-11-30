@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { Layout, Spin } from "antd";
+import { useRouter } from "next/navigation";
 import { PageHeader, PageSider } from "@/components";
 import WrapperContext, { IMeun } from "./wrapperContext";
 import axios from "axios";
@@ -42,6 +43,7 @@ const sdkMenuList = [
 const MainPage = ({ children }: any) => {
   const [menus, setMenus] = useState<Array<IMeun>>([]);
   const [userInfo, setUserInfo] = useState({});
+  const router = useRouter();
 
   useEffect(() => {
     getInitInfo();
@@ -51,19 +53,21 @@ const MainPage = ({ children }: any) => {
     try {
       if (typeof window !== "undefined") {
         const userId = window.localStorage.getItem("AUTH_USER"); // 用于查询用户信息和对应的菜单数据
-        // const res = await Promise.resolve({
-        //   userInfo: { userId: 123, user_name: "zhansan" },
-        //   menus: userCode === "1" ? apiMenuList : sdkMenuList,
-        // });
-        const { data } = await axios.get(`${BASE_URL}/user/${userId}`);
-        const { type, ...restUserInfo } = data;
-        // const { userInfo, menus } = res;
+        const accessToken = window.localStorage.getItem("AUTH_TOKEN");
+        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        const { type } = data;
 
         setMenus(type === 1 ? apiMenuList : sdkMenuList);
         setUserInfo(data);
       }
-    } catch (error) {
+    } catch (error: any) {
+      const { status } = error?.response ?? {};
       console.log(error);
+      if (status === 401) {
+        router.replace("/login");
+      }
     }
   };
 

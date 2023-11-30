@@ -23,8 +23,11 @@ const AccountLogin = () => {
     try {
       setLoading(true);
       const { data }: any = await axios.post(`${BASE_URL}/auth/login`, values);
-      localStorage.setItem("AUTH_USER", data.user_id);
-      router.push("main/");
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("AUTH_USER", data.user_id);
+        window.localStorage.setItem("AUTH_TOKEN", data.access_token);
+        router.push("main/");
+      }
     } catch (error: any) {
       const {
         response: { data },
