@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect, useMemo } from "react";
-import { Layout, Dropdown, Space } from "antd";
+import { Layout, Dropdown, Space, Avatar } from "antd";
 import Image from "next/image";
 // import { useLocation, useNavigate } from 'react-router-dom';
 import { useRouter, usePathname } from "next/navigation";
@@ -9,6 +9,8 @@ import { DownOutlined } from "@ant-design/icons";
 // import { Helpers } from "src/utils";
 import { getPathByKey, getCurrentUser } from "@/utils/helper";
 import WrapperContext from "@/app/main/wrapperContext";
+
+// import avatar from "/assets/images/avatar.png";
 // import { menuRoutes } from "src/routes";
 // import { Logout } from "src/service/common/auth";
 // import "./style.scss";
@@ -56,12 +58,8 @@ const PageHeader = () => {
       <Header>
         <Dropdown menu={{ items }} className="float-right">
           <Space>
-            <Image
-              src="/ad/assets/images/avatar.png"
-              width={24}
-              height={24}
-              alt="avatar"
-            />
+            {/* <Image src={avatar} width={24} height={24} alt="avatar" /> */}
+            <Avatar src="/assets/images/avatar.png" />
             <span className="w-full text-[14px] text-white">
               {userInfo.user_name}
             </span>

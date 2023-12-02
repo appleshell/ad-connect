@@ -21,7 +21,6 @@ export const setCurrentUser = (user: any) => {
 export const getPathByKey = (targetKey: string, treeList: Array<any>) => {
   /** 存放搜索到的树节点到顶部节点的路径节点 */
   let pathRes: Array<any> = [];
-  console.log(targetKey, treeList);
   /**
    * 路径节点追踪
    * @param {*} targetKey 树节点标识的值

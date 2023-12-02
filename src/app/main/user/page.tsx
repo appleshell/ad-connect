@@ -8,10 +8,15 @@ import WrapperContext from "../wrapperContext";
 // import UpdateMobile from './update-mobile-modal';
 // import UpdatePassword from './update-password-modal';
 
+const useTypeMap: any = {
+  1: "使用API",
+  2: "使用SDK",
+};
+
 const AccountInfo = () => {
   const [accountInfo, setAccountInfo] = useState<any>({});
   const {
-    userInfo: { user_name, mobile },
+    userInfo: { user_name, email, type },
   } = useContext(WrapperContext);
 
   useEffect(() => {
@@ -35,10 +40,11 @@ const AccountInfo = () => {
   return (
     <Descriptions column={1} style={{ padding: 20 }}>
       <Descriptions.Item label="账户名称">{user_name}</Descriptions.Item>
-      <Descriptions.Item label="注册手机号">
-        <span>{mobile}</span>
+      <Descriptions.Item label="注册邮箱">
+        <span>{email}</span>
         {/* <UpdateMobile accountInfo={accountInfo} onOk={handleUpdateOk} /> */}
       </Descriptions.Item>
+      <Descriptions.Item label="账户类型">{useTypeMap[type]}</Descriptions.Item>
       {/* <Descriptions.Item label="账户密码">
         <UpdatePassword />
       </Descriptions.Item> */}

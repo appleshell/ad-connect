@@ -5,7 +5,7 @@ export default function Home() {
   if (typeof window !== "undefined") {
     const userCode = window.localStorage.getItem("AUTH_USER");
     if (userCode) {
-      redirect("main/");
+      redirect("/main");
     } else {
       redirect("/login");
     }
