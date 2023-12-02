@@ -10,6 +10,17 @@ import { BASE_URL } from "@/config/http";
 
 const { Content, Footer } = Layout;
 
+const commonMenuList = [
+  {
+    key: "/main/accounts",
+    label: "用户数据",
+  },
+  {
+    key: "/main/user",
+    label: "账户详情",
+  },
+];
+
 const apiMenuList = [
   {
     key: "/main/api-pages/dashboard",
@@ -23,10 +34,7 @@ const apiMenuList = [
     key: "/main/api-pages/connect-test",
     label: "api调试",
   },
-  {
-    key: "/main/user",
-    label: "账户详情",
-  },
+  ...commonMenuList,
 ];
 
 const sdkMenuList = [
@@ -34,10 +42,7 @@ const sdkMenuList = [
     key: "/main/sdk-pages/download",
     label: "sdk下载",
   },
-  {
-    key: "/main/user",
-    label: "账户详情",
-  },
+  ...commonMenuList,
 ];
 
 const MainPage = ({ children }: any) => {

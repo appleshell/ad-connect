@@ -8,7 +8,7 @@ import WrapperContext from "../wrapperContext";
 // import UpdateMobile from './update-mobile-modal';
 // import UpdatePassword from './update-password-modal';
 
-const useTypeMap: any = {
+export const userTypeMap: any = {
   1: "使用API",
   2: "使用SDK",
 };
@@ -44,7 +44,9 @@ const AccountInfo = () => {
         <span>{email}</span>
         {/* <UpdateMobile accountInfo={accountInfo} onOk={handleUpdateOk} /> */}
       </Descriptions.Item>
-      <Descriptions.Item label="账户类型">{useTypeMap[type]}</Descriptions.Item>
+      <Descriptions.Item label="账户类型">
+        {userTypeMap[type]}
+      </Descriptions.Item>
       {/* <Descriptions.Item label="账户密码">
         <UpdatePassword />
       </Descriptions.Item> */}

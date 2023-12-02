@@ -82,9 +82,14 @@ const TableCom = (
 
   const handleSearch = async (pagination: TablePaginationConfig) => {
     setTableLoading(true);
-    const formValue = await form.validateFields();
-    await queryData(formValue, pagination);
-    setTableLoading(false);
+    try {
+      const formValue = await form.validateFields();
+      await queryData(formValue, pagination);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setTableLoading(false);
+    }
   };
 
   const handleTableChange = (pageData: TablePaginationConfig) => {
