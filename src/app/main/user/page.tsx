@@ -8,7 +8,7 @@ import WrapperContext from "../wrapperContext";
 // import UpdateMobile from './update-mobile-modal';
 // import UpdatePassword from './update-password-modal';
 
-export const userTypeMap: any = {
+const userTypeMap: any = {
   1: "使用API",
   2: "使用SDK",
 };

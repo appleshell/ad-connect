@@ -7,7 +7,12 @@ import TableCom from "@/components/TableCom";
 import { BASE_URL } from "@/config/http";
 import qs from "qs";
 import dayjs from "dayjs";
-import { userTypeMap } from "../user/page";
+// import { userTypeMap } from "../user/page";
+
+const userTypeMap: any = {
+  1: "使用API",
+  2: "使用SDK",
+};
 
 const { RangePicker } = DatePicker;
 
