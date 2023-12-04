@@ -15,9 +15,10 @@ import Form from "@/components/Form";
 //   fetchAdPosIds,
 // } from "src/service/media-config";
 // import { useDictData } from "../utils";
-import ReportChart from "./report-chart";
-import ReportTable from "./report-table";
+import ReportChart from "./components/report-chart";
+import ReportTable from "./components/report-table";
 import { platformOptions, adLocationTypeOptions } from "./enum";
+import GrowCard from "./components/GrowCard";
 // import { switchOptionToMap } from "@/utils/helper";
 
 const { useForm } = AntdForm;
@@ -155,8 +156,7 @@ const DataReport = () => {
   };
 
   const getParams = async () => {
-    const { report_time, ...restFields } =
-      await form.validateFields();
+    const { report_time, ...restFields } = await form.validateFields();
     const [start, end] = report_time;
 
     return {
@@ -211,6 +211,13 @@ const DataReport = () => {
 
   return (
     <TableLayout>
+      <GrowCard />
+      <ReportChart
+        data={chartData}
+        metrics={metrics}
+        metricOptions={metricOptions}
+        metricsChange={handleMetricsChange}
+      />
       <Form
         items={itemList}
         form={form}
@@ -237,12 +244,6 @@ const DataReport = () => {
           提交
         </Button>
       </Form>
-      <ReportChart
-        data={chartData}
-        metrics={metrics}
-        metricOptions={metricOptions}
-        metricsChange={handleMetricsChange}
-      />
       <ReportTable data={tableData} sumData={tableSumData} />
     </TableLayout>
   );

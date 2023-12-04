@@ -93,7 +93,7 @@ const ReportTable = ({ data = [], sumData = {} as any }) => {
   }, [data]);
   return (
     <Card title="数据明细" bordered={false} className="com-report-table">
-      <Row gutter={12} className="sum-board">
+      {/* <Row gutter={12} className="sum-board">
         <Col span={5} className="sum-item">
           <Statistic title="展现量" value={sumData.deduplicate_views} />
         </Col>
@@ -121,7 +121,7 @@ const ReportTable = ({ data = [], sumData = {} as any }) => {
             }
           />
         </Col>
-      </Row>
+      </Row> */}
       <Table
         columns={columns}
         dataSource={tableData}
