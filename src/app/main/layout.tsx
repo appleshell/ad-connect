@@ -12,6 +12,10 @@ const { Content, Footer } = Layout;
 
 const commonMenuList = [
   {
+    key: "/main/api-pages/dashboard",
+    label: "dashboard",
+  },
+  {
     key: "/main/accounts",
     label: "用户数据",
   },
@@ -22,10 +26,7 @@ const commonMenuList = [
 ];
 
 const apiMenuList = [
-  {
-    key: "/main/api-pages/dashboard",
-    label: "dashboard",
-  },
+  ...commonMenuList,
   {
     key: "/main/api-pages/traffic",
     label: "流量",
@@ -34,15 +35,14 @@ const apiMenuList = [
     key: "/main/api-pages/connect-test",
     label: "api调试",
   },
-  ...commonMenuList,
 ];
 
 const sdkMenuList = [
+  ...commonMenuList,
   {
     key: "/main/sdk-pages/download",
     label: "sdk下载",
   },
-  ...commonMenuList,
 ];
 
 const MainPage = ({ children }: any) => {

@@ -19,6 +19,7 @@ import ReportChart from "./components/report-chart";
 import ReportTable from "./components/report-table";
 import { platformOptions, adLocationTypeOptions } from "./enum";
 import GrowCard from "./components/GrowCard";
+import { dataList } from "./data";
 // import { switchOptionToMap } from "@/utils/helper";
 
 const { useForm } = AntdForm;
@@ -35,11 +36,16 @@ const DataReport = () => {
   // const { bid_type = [] } = useDictData();
   // const [locationDescOptions, setLocationDescOptions] = useState([]);
   const [adPosIdOptions, setAdPosIdOptions] = useState([]);
-  const [metricOptions, setMetricOptions] = useState([]);
+  const [metricOptions, setMetricOptions] = useState([
+    { value: 7, label: "7天" },
+    { value: 10, label: "10天" },
+    { value: 15, label: "15天" },
+    { value: 30, label: "1月" },
+  ]);
   const [chartData, setChartData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [tableSumData, setTableSumData] = useState({});
-  const [metrics, setMetrics] = useState<Array<any>>([]);
+  const [metrics, setMetrics] = useState<number>(7);
 
   // const BidTypeMap = switchOptionToMap(bid_type);
 
@@ -104,29 +110,29 @@ const DataReport = () => {
   }, []);
 
   const queryDicts = async () => {
-    const allLocationTypes = adLocationTypeOptions.map(
-      (item: any) => item.value
-    );
-    const [metricsEnumsRes, adPosIdRes] = await Promise.all([
-      // fetchListMetricEnums({}),
-      // fetchAdPosIds({
-      //   location_types: location_type ? [location_type] : allLocationTypes,
-      // }),
-      Promise.resolve([]),
-      Promise.resolve([]),
-    ]);
+    // const allLocationTypes = adLocationTypeOptions.map(
+    //   (item: any) => item.value
+    // );
+    // const [metricsEnumsRes, adPosIdRes] = await Promise.all([
+    //   // fetchListMetricEnums({}),
+    //   // fetchAdPosIds({
+    //   //   location_types: location_type ? [location_type] : allLocationTypes,
+    //   // }),
+    //   Promise.resolve([]),
+    //   Promise.resolve([]),
+    // ]);
 
-    const options: any = (adPosIdRes || []).map((item: any) => ({
-      value: item,
-      label: item,
-    }));
-    setAdPosIdOptions(options);
-    setMetricOptions(metricsEnumsRes);
+    // const options: any = (adPosIdRes || []).map((item: any) => ({
+    //   value: item,
+    //   label: item,
+    // }));
+    // setAdPosIdOptions(options);
+    // setMetricOptions(metricsEnumsRes);
 
-    const initMetrics = metricsEnumsRes
-      .slice(0, 1)
-      .map((item: any) => item.value);
-    setMetrics(initMetrics);
+    // const initMetrics = metricsEnumsRes
+    //   .slice(0, 1)
+    //   .map((item: any) => item.value);
+    // setMetrics(initMetrics);
 
     // if (options?.length) {
     // }
@@ -137,7 +143,8 @@ const DataReport = () => {
     //     ? (ad_pos_ids as string).split(",")
     //     : options.map((item: any) => item.value),
     // });
-    queryReportData({ metrics: initMetrics });
+    // queryReportData({ metrics: initMetrics });
+    queryReportData();
   };
 
   const queryAdPosList = async (types: Array<any> = []) => {
@@ -167,29 +174,31 @@ const DataReport = () => {
   };
 
   // 查询报表数据
-  const queryReportData = async (restParams = {}) => {
+  const queryReportData = async (restParams: any = {}) => {
     try {
-      const params = await getParams();
+      // const params = await getParams();
       // const { chart, ads_data, sum } = await fetchDataReport({
       //   ...params,
       //   tag: 1,
       //   metrics,
       //   ...restParams,
       // });
-      const { chart, ads_data, sum }: any = await Promise.resolve({});
+      const { chart, ads_data, sum }: any = await Promise.resolve({
+        chart: dataList(restParams.metrics),
+      });
       setChartData(chart);
-      setTableData(ads_data);
-      setTableSumData(sum);
+      // setTableData(ads_data);
+      // setTableSumData(sum);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleMetricsChange = async (v: Array<any>) => {
+  const handleMetricsChange = async (v: number) => {
     setMetrics(v);
-    if (!v?.length) {
-      return message.warning("指标不能为空");
-    }
+    // if (!v?.length) {
+    //   return message.warning("指标不能为空");
+    // }
     queryReportData({ metrics: v });
   };
 

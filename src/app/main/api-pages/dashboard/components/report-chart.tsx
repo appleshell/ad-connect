@@ -46,13 +46,18 @@ const ReportChart = ({
   return (
     <Card title="数据报表">
       <div>
-        <span>指标：</span>
+        <span>时间：</span>
         <Select
           style={{ width: 300 }}
-          options={metricOptions}
+          options={[
+            { value: 7, label: "7天" },
+            { value: 10, label: "10天" },
+            { value: 15, label: "15天" },
+            { value: 30, label: "1月" },
+          ]}
           value={metrics}
           onChange={handleMetricsChange}
-          mode="multiple"
+          // mode="multiple"
         />
       </div>
       <ReactEcharts

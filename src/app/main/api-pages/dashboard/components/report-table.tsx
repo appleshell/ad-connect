@@ -45,10 +45,10 @@ const columns = [
     dataIndex: "ctr",
     render: (v: number) => `${(v * 100).toFixed(2)}%`,
   },
-  {
-    title: "CPM",
-    dataIndex: "cpm",
-  },
+  // {
+  //   title: "CPM",
+  //   dataIndex: "cpm",
+  // },
   {
     title: "预期收益(元)",
     dataIndex: "rbtcost",
@@ -93,35 +93,6 @@ const ReportTable = ({ data = [], sumData = {} as any }) => {
   }, [data]);
   return (
     <Card title="数据明细" bordered={false} className="com-report-table">
-      {/* <Row gutter={12} className="sum-board">
-        <Col span={5} className="sum-item">
-          <Statistic title="展现量" value={sumData.deduplicate_views} />
-        </Col>
-        <Col span={5} className="sum-item">
-          <Statistic title="点击量" value={sumData.deduplicate_clicks} />
-        </Col>
-        <Col span={5} className="sum-item">
-          <Statistic
-            title="点击率"
-            value={
-              Number.isFinite(sumData.ctr)
-                ? `${(sumData.ctr * 100).toFixed(2)}%`
-                : ""
-            }
-          />
-        </Col>
-        <Col span={4} className="pb-5">
-          <Statistic title="CPM" value={sumData.cpm} />
-        </Col>
-        <Col span={5} className="p-3 border">
-          <Statistic
-            title="预期收益(元)"
-            value={
-              Number.isFinite(sumData.rbtcost) ? sumData.rbtcost.toFixed(2) : ""
-            }
-          />
-        </Col>
-      </Row> */}
       <Table
         columns={columns}
         dataSource={tableData}

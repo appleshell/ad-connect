@@ -42,15 +42,21 @@ const AccountLogin = () => {
     <Form form={form} size="large" onFinish={login}>
       <FormItem
         name="user_name"
-        rules={[{ required: true, message: "请输入用户名" }]}
+        rules={[{ required: true, message: "请输入用户名r" }]}
       >
-        <Input placeholder="请输入用户名" prefix={<UserOutlined />} />
+        <Input
+          placeholder="请输入用户名, default: user"
+          prefix={<UserOutlined />}
+        />
       </FormItem>
       <FormItem
         name="password"
         rules={[{ required: true, message: "请输入密码" }]}
       >
-        <Input.Password placeholder="请输入密码" prefix={<LockOutlined />} />
+        <Input.Password
+          placeholder="请输入密码, default: 123456"
+          prefix={<LockOutlined />}
+        />
       </FormItem>
       {/* <Form.Item name="remember_me" valuePropName="checked">
         <Checkbox>记住我</Checkbox>
