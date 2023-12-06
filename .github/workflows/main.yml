@@ -13,7 +13,8 @@ jobs:
           host: ${{secrets.REMOTE_HOST}}
           username: ${{secrets.REMOTE_USER}}
           password: ${{secrets.REMOTE_PASSWORD}}
-          script:
+          port: 22
+          script: |
             cd /home/workspace/ad-connect
             pnpm i
             pnpm run build
