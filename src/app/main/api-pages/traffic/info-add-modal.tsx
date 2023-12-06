@@ -53,21 +53,6 @@ const InfoAddModal = ({
       width={600}
       afterClose={() => form.resetFields()}
     >
-      {!editData && (
-        <Alert
-          type="warning"
-          message={
-            <div>
-              <p>
-                1.
-                本功能一次增加一条APP信息，若需添加多个APP信息，需要多次新增。
-              </p>
-              <p>2. 对于ADX流量，只需添加流量前十的APP信息</p>
-            </div>
-          }
-          style={{ marginBottom: 16 }}
-        />
-      )}
       <Form form={form} labelCol={{ span: 6 }}>
         <FormItem label="流量类型" name="traffic_type" rules={commonRules}>
           <Select options={flowTypeOptions} allowClear />
