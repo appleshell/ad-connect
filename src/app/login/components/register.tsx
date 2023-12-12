@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, message, Select } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
-import { BASE_URL } from "@/config/http";
+import request from "@/utils/request";
 
 const { Item: FormItem, useForm } = Form;
 
@@ -17,12 +17,8 @@ const Register = ({ onSuccess }: { onSuccess: () => void }) => {
   const handleRegister = async (values: any) => {
     try {
       setLoading(true);
-      const response = await fetch(`${BASE_URL}/user/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      const { statusCode, message: msg } = await response.json();
+      const res: any = await request.post("/user/register", values);
+      const { statusCode, message: msg } = res;
       if (!statusCode) {
         message.success("注册成功，请登录");
         onSuccess();

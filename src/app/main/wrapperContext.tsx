@@ -8,10 +8,8 @@ export interface IMeun {
 
 const WrapperContext = createContext<{
   menus: IMeun[];
-  userInfo: any;
 }>({
   menus: [],
-  userInfo: {},
 });
 
 export default WrapperContext;

@@ -5,15 +5,15 @@ import { Layout, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { PageHeader, PageSider } from "@/components";
 import WrapperContext, { IMeun } from "./wrapperContext";
-import axios from "axios";
-import { BASE_URL } from "@/config/http";
+import { useUserInfo } from "@/hooks";
+import request from "@/utils/request";
 
 const { Content, Footer } = Layout;
 
 const commonMenuList = [
   {
     key: "/main/api-pages/dashboard",
-    label: "dashboard",
+    label: "Dashboard",
   },
   {
     key: "/main/accounts",
@@ -47,8 +47,9 @@ const sdkMenuList = [
 
 const MainPage = ({ children }: any) => {
   const [menus, setMenus] = useState<Array<IMeun>>([]);
-  const [userInfo, setUserInfo] = useState({});
+
   const router = useRouter();
+  const updateUserInfo = useUserInfo((state: any) => state.updateUserInfo);
 
   useEffect(() => {
     getInitInfo();
@@ -58,14 +59,11 @@ const MainPage = ({ children }: any) => {
     try {
       if (typeof window !== "undefined") {
         const userId = window.localStorage.getItem("AUTH_USER"); // 用于查询用户信息和对应的菜单数据
-        const accessToken = window.localStorage.getItem("AUTH_TOKEN");
-        const { data } = await axios.get(`${BASE_URL}/user/${userId}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        const data: any = await request.get(`/user/${userId}`);
         const { type } = data;
 
         setMenus(type === 1 ? apiMenuList : sdkMenuList);
-        setUserInfo(data);
+        updateUserInfo(data);
       }
     } catch (error: any) {
       const { status } = error?.response ?? {};
@@ -77,7 +75,7 @@ const MainPage = ({ children }: any) => {
   };
 
   return (
-    <WrapperContext.Provider value={{ menus, userInfo }}>
+    <WrapperContext.Provider value={{ menus }}>
       <Layout className="w-full h-screen">
         <PageSider />
         <Layout>
@@ -87,8 +85,8 @@ const MainPage = ({ children }: any) => {
               <section className="w-full h-full bg-white">{children}</section>
             </Suspense>
           </Content>
-          <Footer className="text-center bg-white px-1 py-6 border-solid border-t border-l border-[#f0f2f5]">
-            Copyright 2015-{new Date().getFullYear()}
+          <Footer className="text-center bg-white px-1 py-2 border-solid border-t border-l border-[#f0f2f5]">
+            Copyright {new Date().getFullYear()}
           </Footer>
         </Layout>
       </Layout>

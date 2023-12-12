@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
 import { DatePicker, Space, Switch } from "antd";
 import TableCom from "@/components/TableCom";
 import { BASE_URL } from "@/config/http";
 import qs from "qs";
 import dayjs from "dayjs";
-// import { userTypeMap } from "../user/page";
+import request from "@/utils/request";
 
 const userTypeMap: any = {
   1: "使用API",
@@ -78,17 +77,11 @@ const UserLists = () => {
     const strs = qs.stringify({ ...params, current, page_size: pageSize });
     console.log(strs);
 
-    if (typeof window !== "undefined") {
-      const accessToken = window.localStorage.getItem("AUTH_TOKEN");
-      try {
-        const { status, data } = await axios.get(`${BASE_URL}/user?${strs}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        if (status === 200) {
-          setDataSource(data || []);
-        }
-      } catch (error) {}
-    }
+    try {
+      const data: any = await request.get(`${BASE_URL}/user?${strs}`);
+
+      setDataSource(data || []);
+    } catch (error) {}
   };
 
   return (
