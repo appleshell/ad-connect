@@ -46,7 +46,7 @@ const InfoAddModal = ({
   return (
     <Modal
       title={editData ? "修改信息" : "新增信息"}
-      visible={visible}
+      open={visible}
       confirmLoading={loading}
       onOk={handleOk}
       onCancel={onCancel}

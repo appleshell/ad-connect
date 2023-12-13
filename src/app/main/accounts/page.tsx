@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { DatePicker, Space, Switch } from "antd";
 import TableCom from "@/components/TableCom";
 import { BASE_URL } from "@/config/http";
 import qs from "qs";
 import dayjs from "dayjs";
 import request from "@/utils/request";
+import { SwitchChangeEventHandler } from "antd/es/switch";
 
 const userTypeMap: any = {
   1: "使用API",
@@ -23,12 +24,23 @@ const userStatusMap: any = {
 const UserLists = () => {
   const [dataSource, setDataSource] = useState([]);
   const [total, setTotal] = useState(0);
+  const tableRef = useRef<any>();
 
   const itemList = [
     { name: "user_name", label: "用户名称" },
     { name: "email", label: "注册邮箱" },
     // { name: "created_at", label: "创建日期", render: () => <RangePicker /> },
   ];
+
+  const toggleUserStatus =
+    (data: any): SwitchChangeEventHandler =>
+    async (checked) => {
+      try {
+        const { _id } = data;
+        await request.put("/user/status", { _id, status: checked ? 1 : 0 });
+        tableRef.current.refresh();
+      } catch (error) {}
+    };
 
   const columns = [
     { title: "用户名称", dataIndex: "user_name" },
@@ -51,13 +63,14 @@ const UserLists = () => {
     {
       title: "操作",
       dataIndex: "operate",
-      render: (_: never, { status, type }: any) => (
+      render: (_: never, { status, type, _id }: any) => (
         <Space>
           <Switch
-            disabled={type !== 0}
+            // disabled={type !== 0}
             checked={status === 1}
             checkedChildren="生效"
             unCheckedChildren="失效"
+            onChange={toggleUserStatus({ _id })}
           />
         </Space>
       ),
@@ -78,20 +91,23 @@ const UserLists = () => {
     console.log(strs);
 
     try {
-      const data: any = await request.get(`${BASE_URL}/user?${strs}`);
+      const data: any = await request.get(`/user?${strs}`);
 
-      setDataSource(data || []);
+      setDataSource(data?.users || []);
+      setTotal(data?.total);
     } catch (error) {}
   };
 
   return (
     <TableCom
+      ref={tableRef}
       tableSearchProps={{ items: itemList }}
       tableProps={{
         columns,
         dataSource,
         queryData: queryDataList,
-        pagination: { total },
+        pagination: { total, showTotal: (total) => `Total ${total} items` },
+        rowKey: "_id",
       }}
     />
   );

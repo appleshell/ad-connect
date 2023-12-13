@@ -13,6 +13,7 @@ import { SearchOutlined, DownOutlined } from "@ant-design/icons";
 import Form, { FormProps } from "./Form";
 import TableLayout from "./TableLayout";
 import { TablePaginationConfig } from "antd/lib/table/interface";
+import { TableProps } from "antd/lib";
 interface ISearch {
   itemList: any[];
 }
@@ -32,7 +33,7 @@ export interface TableSearchProps extends FormProps {
   disabledSearchBtnAddonAfter?: React.ReactNode; // 隐藏搜索按钮之后，替代组件
 }
 
-interface ITable {
+interface ITable extends TableProps<any> {
   columns: any[];
   dataSource: any[];
   pagination?: TablePaginationConfig | false;
