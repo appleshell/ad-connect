@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Modal, Select, InputNumber, Alert } from "antd";
+import request from "@/utils/request";
 // import { submitFlowInfo, submitEditFlowInfo } from 'src/service/flow-info';
 
 const { Item: FormItem, useForm } = Form;
@@ -29,13 +30,15 @@ const InfoAddModal = ({
     try {
       setLoading(true);
       const parmas = await form.validateFields();
-      // if (editData) {
-      //   await submitEditFlowInfo({ ...editData, ...parmas });
-      //   onOk();
-      // } else {
-      //   await submitFlowInfo(parmas);
-      //   onOk();
-      // }
+      if (editData) {
+        // await submitEditFlowInfo({ ...editData, ...parmas });
+        onOk();
+      } else {
+        // await submitFlowInfo(parmas);
+        const res = await request.post("/app", parmas);
+        console.log(res);
+        onOk();
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -60,13 +63,13 @@ const InfoAddModal = ({
         <FormItem label="APP名称" name="app_name" rules={commonRules}>
           <Input />
         </FormItem>
-        <FormItem label="包名" name="package_name" rules={commonRules}>
+        <FormItem label="包名" name="app_package" rules={commonRules}>
           <Input />
         </FormItem>
-        <FormItem label="DAU(万)" name="dua" rules={commonRules}>
+        <FormItem label="DAU(万)" name="dau" rules={commonRules}>
           <InputNumber min={0} style={{ width: "100%" }} />
         </FormItem>
-        <FormItem label="日均请求量级(万)" name="req_day" rules={commonRules}>
+        <FormItem label="日均请求量级(万)" name="request_daily" rules={commonRules}>
           <InputNumber min={0} style={{ width: "100%" }} />
         </FormItem>
       </Form>

@@ -91,7 +91,7 @@ const UserLists = () => {
     console.log(strs);
 
     try {
-      const data: any = await request.get(`/user?${strs}`);
+      const data: any = await request.get(`/user/lists?${strs}`);
 
       setDataSource(data?.users || []);
       setTotal(data?.total);

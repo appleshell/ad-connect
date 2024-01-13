@@ -58,8 +58,7 @@ const MainPage = ({ children }: any) => {
   const getInitInfo = async () => {
     try {
       if (typeof window !== "undefined") {
-        const userId = window.localStorage.getItem("AUTH_USER"); // 用于查询用户信息和对应的菜单数据
-        const data: any = await request.get(`/user/${userId}`);
+        const data: any = await request.get("/user");
         const { type } = data;
 
         setMenus(type === 1 ? apiMenuList : sdkMenuList);

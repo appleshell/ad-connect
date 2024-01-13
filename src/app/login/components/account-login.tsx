@@ -37,7 +37,7 @@ const AccountLogin = () => {
     <Form form={form} size="large" onFinish={login}>
       <FormItem
         name="user_name"
-        rules={[{ required: true, message: "请输入用户名r" }]}
+        rules={[{ required: true, message: "请输入用户名" }]}
       >
         <Input
           placeholder="请输入用户名, default: user"

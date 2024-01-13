@@ -5,10 +5,11 @@ import { Button, Select } from "antd";
 import TableCom, { TableRef } from "@/components/TableCom";
 // import { fetchFlowInfoList, fetchFlowTypes } from 'src/service/flow-info';
 import InfoAddModal from "./info-add-modal";
+import request from "@/utils/request";
 
 const FlowInfo = () => {
   const tableRef = useRef<TableRef>();
-  const [flowTypeOptions, setFlowTypeOptions] = useState([]);
+  const [flowTypeOptions, setFlowTypeOptions] = useState<any[]>([]);
   const [dataSource, setDataSource] = useState([]);
   const [total, setTotal] = useState(0);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
@@ -35,7 +36,7 @@ const FlowInfo = () => {
   const columns = [
     {
       title: "流量类型",
-      dataIndex: "traffic_type_name",
+      dataIndex: "traffic_type",
     },
     {
       title: "APP名称",
@@ -43,15 +44,15 @@ const FlowInfo = () => {
     },
     {
       title: "包名",
-      dataIndex: "package_name",
+      dataIndex: "app_package",
     },
     {
       title: "DAU(万)",
-      dataIndex: "dua",
+      dataIndex: "dau",
     },
     {
       title: "日均请求量级(万)",
-      dataIndex: "req_day",
+      dataIndex: "request_daily",
     },
     {
       title: "修改",
@@ -70,7 +71,11 @@ const FlowInfo = () => {
 
   const queryFlowTYpes = async () => {
     try {
-      const res = await Promise.resolve([]);
+      const res = await Promise.resolve([
+        { label: "文案", value: 1 },
+        { label: "图片", value: 1 },
+        { label: "视频", value: 2 },
+      ]);
       setFlowTypeOptions(res);
     } catch (error) {
       console.log(error);
@@ -80,12 +85,13 @@ const FlowInfo = () => {
   const queryDataList = async (formValue: any, pagination: any) => {
     try {
       const { current, pageSize } = pagination;
-      const {
-        items,
-        pagination: { total },
-      } = await Promise.resolve({ ...formValue, current, page_size: pageSize });
-      setDataSource(items);
-      setTotal(total);
+      // const {
+      //   items,
+      //   pagination: { total },
+      // } = await Promise.resolve({ ...formValue, current, page_size: pageSize });
+      const data:any = await request.get("/app/list");
+      setDataSource(data || []);
+      setTotal(data?.length || 0);
     } catch (error) {
       console.log(error);
     }
