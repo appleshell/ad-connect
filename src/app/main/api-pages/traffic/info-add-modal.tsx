@@ -31,7 +31,7 @@ const InfoAddModal = ({
       setLoading(true);
       const parmas = await form.validateFields();
       if (editData) {
-        // await submitEditFlowInfo({ ...editData, ...parmas });
+        await request.put("/app", { ...editData, ...parmas });
         onOk();
       } else {
         // await submitFlowInfo(parmas);
@@ -69,7 +69,11 @@ const InfoAddModal = ({
         <FormItem label="DAU(万)" name="dau" rules={commonRules}>
           <InputNumber min={0} style={{ width: "100%" }} />
         </FormItem>
-        <FormItem label="日均请求量级(万)" name="request_daily" rules={commonRules}>
+        <FormItem
+          label="日均请求量级(万)"
+          name="request_daily"
+          rules={commonRules}
+        >
           <InputNumber min={0} style={{ width: "100%" }} />
         </FormItem>
       </Form>

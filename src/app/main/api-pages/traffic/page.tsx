@@ -6,6 +6,7 @@ import TableCom, { TableRef } from "@/components/TableCom";
 // import { fetchFlowInfoList, fetchFlowTypes } from 'src/service/flow-info';
 import InfoAddModal from "./info-add-modal";
 import request from "@/utils/request";
+import dayjs from "dayjs";
 
 const FlowInfo = () => {
   const tableRef = useRef<TableRef>();
@@ -55,6 +56,11 @@ const FlowInfo = () => {
       dataIndex: "request_daily",
     },
     {
+      title: "创建时间",
+      dataIndex: "createdAt",
+      render: (v: Date) => dayjs(v).format("YYYY-MM-DD HH:mm:ss"),
+    },
+    {
       title: "修改",
       dataIndex: "operate",
       render: (_: never, r: any) => (
@@ -89,7 +95,7 @@ const FlowInfo = () => {
       //   items,
       //   pagination: { total },
       // } = await Promise.resolve({ ...formValue, current, page_size: pageSize });
-      const data:any = await request.get("/app/list");
+      const data: any = await request.get("/app/list");
       setDataSource(data || []);
       setTotal(data?.length || 0);
     } catch (error) {
